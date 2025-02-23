@@ -15,105 +15,77 @@ Create a “Task Management” application with **React + TypeScript** (frontend
    - **Update an existing task** (e.g., mark complete, edit).
    - **Delete a task**.
 
-Focus on **correctness**, **functionality**, and **code clarity** rather than visual design.  
-This challenge is intended to be completed within ~3 hours, so keep solutions minimal yet functional.
 
----
+## Setup Instructions
 
-## Requirements
+### Prerequisites
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+- PostgreSQL (v14 or higher)
+-frontend: React + TypeScript
+### Database Setup
+1. Create a PostgreSQL database for the project
+2. Note down your database credentials (username, password, database name)
 
-### 1. Authentication
+### Server Setup (NestJS Backend)
+1. Navigate to the server directory:
+   ```bash
+   cd Backend
+   ```
 
-- **User Model**:
-  - `id`: Primary key
-  - `username`: Unique string
-  - `password`: Hashed string
-- **Endpoints**:
-  - `POST /auth/register` – Create a new user
-  - `POST /auth/login` – Login user, return a token (e.g., JWT)
-- **Secure the Tasks Routes**: Only authenticated users can perform task operations.  
-  - **Password Hashing**: Use `bcrypt` or another hashing library to store passwords securely.
-  - **Token Verification**: Verify the token (JWT) on each request to protected routes.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### 2. Backend (Node.js or Nest.js)
+3. Create a `.env` file in the server directory with the following variables:
+   ```bash
+    JWT_SECRET=mysecretkey12345
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_USER=postgres
+    DB_PASSWORD=?
+    DB_NAME=?
+   ```
+   Replace DB_PASSWORD, DB_NAME with your actual PostgreSQL credentials.
 
-- **Tasks CRUD**:  
-  - `GET /tasks` – Retrieve a list of tasks (optionally filtered by user).  
-  - `POST /tasks` – Create a new task.  
-  - `PUT /tasks/:id` – Update a task (e.g., mark as complete, edit text).  
-  - `DELETE /tasks/:id` – Delete a task.
-- **Task Model**:
-  - `id`: Primary key
-  - `title`: string
-  - `description`: string (optional)
-  - `isComplete`: boolean (default `false`)
-  - _(Optional)_ `userId` to link tasks to the user who created them
-- **Database**: PostgreSQL
-  - Provide instructions/migrations to set up:
-    - `users` table (with hashed passwords)
-    - `tasks` table
-- **Setup**:
-  - `npm install` to install dependencies
-  - `npm run start` (or `npm run dev`) to run the server
-  - Document any environment variables (e.g., database connection string, JWT secret)
+4. Run database migrations:
 
-### 3. Frontend (React + TypeScript)
 
-- **Login / Register**:
-  - Simple forms for **Register** and **Login**.
-  - Store JWT (e.g., in `localStorage`) upon successful login.
-  - If not authenticated, the user should not see the tasks page.
-- **Tasks Page**:
-  - Fetch tasks from `GET /tasks` (including auth token in headers).
-  - Display the list of tasks.
-  - Form to create a new task (`POST /tasks`).
-  - Buttons/fields to update a task (`PUT /tasks/:id`).
-  - Button to delete a task (`DELETE /tasks/:id`).
-- **Navigation**:
-  - Show `Login`/`Register` if not authenticated.
-  - Show `Logout` if authenticated.
-- **Setup**:
-  - `npm install` then `npm start` (or `npm run dev`) to run.
-  - Document how to point the frontend at the backend (e.g., `.env` file, base URL).
+5. Start the server in development mode:
+   ```bash
+   npm run start:dev
+   ```
+   The server will run on http://localhost:3000
 
----
+### Client Setup (React Frontend)
+1. Open a new terminal and navigate to the client directory:
+   ```bash
+   cd Frontend
+   ```
 
-## Deliverables
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-1. **Fork the Public Repository**: **Fork** this repo into your own GitHub account.
-2. **Implement Your Solution** in the forked repository. Make sure you're README file has:
-   - Steps to set up the database (migrations, environment variables).
-   - How to run the backend.
-   - How to run the frontend.
-   - Any relevant notes on testing.
-   - Salary Expectations per month (Mandatory)
-3. **Short Video Demo**: Provide a link (in a `.md` file in your forked repo) to a brief screen recording showing:
-   - Registering a user
-   - Logging in
-   - Creating, updating, and deleting tasks
-4. **Deadline**: Submissions are due **Sunday, Feb 23th 11:59 pm PST**.
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The client will run on http://localhost:3001
 
-> **Note**: Please keep your solution minimal. The entire project is intended to be completed in around 3 hours. Focus on core features (registration, login, tasks CRUD) rather than polished UI or extra features.
+### Testing the Application
+1. Open your browser and navigate to http://localhost:3001
+2. Register a new user account
+3. Log in with your credentials
+4. You can now create, read, update, and delete tasks
 
----
-
-## Evaluation Criteria
-
-1. **Functionality**  
-   - Does registration and login work correctly (with password hashing)?
-   - Are tasks protected by authentication?
-   - Does the tasks CRUD flow work end-to-end?
-
-2. **Code Quality**  
-   - Is the code structured logically and typed in TypeScript?
-   - Are variable/function names descriptive?
-
-3. **Clarity**  
-   - Is the `README.md` (in your fork) clear and detailed about setup steps?
-   - Easy to run and test?
-
-4. **Maintainability**  
-   - Organized logic (controllers/services, etc.)
-   - Minimal hard-coded values
-
-Good luck, and we look forward to your submission!
+### API Endpoints
+The server exposes the following endpoints:
+- POST /auth/register - Register a new user
+- POST /auth/login - Login user
+- GET /tasks - Get all tasks
+- POST /tasks - Create a new task
+- PATCH /tasks/:id - Update a task
+- DELETE /tasks/:id - Delete a task
